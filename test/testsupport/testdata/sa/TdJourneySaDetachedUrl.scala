@@ -26,7 +26,7 @@ import essttp.rootmodel.dates.startdates.StartDatesResponse
 import essttp.rootmodel.ttp.affordability.InstalmentAmounts
 import essttp.rootmodel.ttp.affordablequotes.{AffordableQuotesResponse, PaymentPlan}
 import essttp.rootmodel.ttp.arrangement.ArrangementResponse
-import essttp.rootmodel.ttp.eligibility.EligibilityCheckResult
+import essttp.rootmodel.ttp.eligibility.{AssessmentCategory, EligibilityCheckResult}
 import paymentsEmailVerification.models.EmailVerificationResult
 import play.api.libs.json.JsNull
 import testsupport.testdata.{TdBase, TdJourneyStructure}
@@ -102,6 +102,22 @@ trait TdJourneySaDetachedUrl {
       redirectToLegacySaService = Some(false)
     )
 
+    def journeyAfterAssessmentCategoryDetermined(assessmentCategory: AssessmentCategory = AssessmentCategory.Standard) =
+      Journey.AssessmentCategoryDetermined(
+        _id = dependencies.journeyId,
+        origin = Origins.Sa.DetachedUrl,
+        createdOn = dependencies.createdOn,
+        sjRequest = sjRequest,
+        sessionId = dependencies.sessionId,
+        affordabilityEnabled = Some(false),
+        correlationId = dependencies.correlationId,
+        taxId = saUtr,
+        eligibilityCheckResult = eligibleEligibilityCheckResultSa,
+        assessmentCategory = assessmentCategory,
+        pegaCaseId = None,
+        redirectToLegacySaService = Some(false)
+      )
+
     def journeyAfterWhyCannotPayInFullNotRequired: Journey.ObtainedWhyCannotPayInFullAnswers =
       Journey.ObtainedWhyCannotPayInFullAnswers(
         _id = dependencies.journeyId,
@@ -113,6 +129,7 @@ trait TdJourneySaDetachedUrl {
         correlationId = dependencies.correlationId,
         taxId = saUtr,
         eligibilityCheckResult = eligibleEligibilityCheckResultSa,
+        assessmentCategory = AssessmentCategory.Standard,
         whyCannotPayInFullAnswers = WhyCannotPayInFullAnswers.AnswerNotRequired,
         pegaCaseId = None,
         redirectToLegacySaService = Some(false)
@@ -132,6 +149,7 @@ trait TdJourneySaDetachedUrl {
       correlationId = dependencies.correlationId,
       taxId = saUtr,
       eligibilityCheckResult = eligibleEligibilityCheckResultSa,
+      assessmentCategory = AssessmentCategory.Standard,
       whyCannotPayInFullAnswers = WhyCannotPayInFullAnswers.AnswerNotRequired,
       canPayUpfront = canPayUpfrontYes,
       pegaCaseId = None,
@@ -148,6 +166,7 @@ trait TdJourneySaDetachedUrl {
       correlationId = dependencies.correlationId,
       taxId = saUtr,
       eligibilityCheckResult = eligibleEligibilityCheckResultSa,
+      assessmentCategory = AssessmentCategory.Standard,
       whyCannotPayInFullAnswers = WhyCannotPayInFullAnswers.AnswerNotRequired,
       canPayUpfront = canPayUpfrontNo,
       pegaCaseId = None,
@@ -167,6 +186,7 @@ trait TdJourneySaDetachedUrl {
         correlationId = dependencies.correlationId,
         taxId = saUtr,
         eligibilityCheckResult = eligibleEligibilityCheckResultSa,
+        assessmentCategory = AssessmentCategory.Standard,
         whyCannotPayInFullAnswers = WhyCannotPayInFullAnswers.AnswerNotRequired,
         canPayUpfront = canPayUpfrontYes,
         upfrontPaymentAmount = dependencies.upfrontPaymentAmount,
@@ -186,6 +206,7 @@ trait TdJourneySaDetachedUrl {
       correlationId = dependencies.correlationId,
       taxId = saUtr,
       eligibilityCheckResult = eligibleEligibilityCheckResultSa,
+      assessmentCategory = AssessmentCategory.Standard,
       whyCannotPayInFullAnswers = WhyCannotPayInFullAnswers.AnswerNotRequired,
       upfrontPaymentAnswers = dependencies.upfrontPaymentAnswersDeclared,
       extremeDatesResponse = dependencies.extremeDatesWithUpfrontPayment,
@@ -206,6 +227,7 @@ trait TdJourneySaDetachedUrl {
         correlationId = dependencies.correlationId,
         taxId = saUtr,
         eligibilityCheckResult = eligibleEligibilityCheckResultSa,
+        assessmentCategory = AssessmentCategory.Standard,
         whyCannotPayInFullAnswers = WhyCannotPayInFullAnswers.AnswerNotRequired,
         upfrontPaymentAnswers = dependencies.upfrontPaymentAnswersDeclared,
         extremeDatesResponse = dependencies.extremeDatesWithUpfrontPayment,
@@ -225,6 +247,7 @@ trait TdJourneySaDetachedUrl {
         correlationId = dependencies.correlationId,
         taxId = saUtr,
         eligibilityCheckResult = eligibleEligibilityCheckResultSa,
+        assessmentCategory = AssessmentCategory.Standard,
         whyCannotPayInFullAnswers = WhyCannotPayInFullAnswers.AnswerNotRequired,
         upfrontPaymentAnswers = dependencies.upfrontPaymentAnswersDeclared,
         extremeDatesResponse = dependencies.extremeDatesWithUpfrontPayment,
@@ -247,6 +270,7 @@ trait TdJourneySaDetachedUrl {
         correlationId = dependencies.correlationId,
         taxId = saUtr,
         eligibilityCheckResult = eligibleEligibilityCheckResultSa,
+        assessmentCategory = AssessmentCategory.Standard,
         whyCannotPayInFullAnswers = WhyCannotPayInFullAnswers.AnswerNotRequired,
         upfrontPaymentAnswers = dependencies.upfrontPaymentAnswersDeclared,
         extremeDatesResponse = dependencies.extremeDatesWithUpfrontPayment,
@@ -269,6 +293,7 @@ trait TdJourneySaDetachedUrl {
       correlationId = dependencies.correlationId,
       taxId = saUtr,
       eligibilityCheckResult = eligibleEligibilityCheckResultSa,
+      assessmentCategory = AssessmentCategory.Standard,
       whyCannotPayInFullAnswers = WhyCannotPayInFullAnswers.AnswerNotRequired,
       upfrontPaymentAnswers = dependencies.upfrontPaymentAnswersDeclared,
       extremeDatesResponse = dependencies.extremeDatesWithUpfrontPayment,
@@ -292,6 +317,7 @@ trait TdJourneySaDetachedUrl {
       correlationId = dependencies.correlationId,
       taxId = saUtr,
       eligibilityCheckResult = eligibleEligibilityCheckResultSa,
+      assessmentCategory = AssessmentCategory.Standard,
       whyCannotPayInFullAnswers = WhyCannotPayInFullAnswers.AnswerNotRequired,
       upfrontPaymentAnswers = dependencies.upfrontPaymentAnswersDeclared,
       extremeDatesResponse = dependencies.extremeDatesWithUpfrontPayment,
@@ -317,6 +343,7 @@ trait TdJourneySaDetachedUrl {
         correlationId = dependencies.correlationId,
         taxId = saUtr,
         eligibilityCheckResult = eligibleEligibilityCheckResultSa,
+        assessmentCategory = AssessmentCategory.Standard,
         whyCannotPayInFullAnswers = WhyCannotPayInFullAnswers.AnswerNotRequired,
         upfrontPaymentAnswers = dependencies.upfrontPaymentAnswersDeclared,
         extremeDatesResponse = dependencies.extremeDatesWithUpfrontPayment,
@@ -342,6 +369,7 @@ trait TdJourneySaDetachedUrl {
       correlationId = dependencies.correlationId,
       taxId = saUtr,
       eligibilityCheckResult = eligibleEligibilityCheckResultSa,
+      assessmentCategory = AssessmentCategory.Standard,
       whyCannotPayInFullAnswers = WhyCannotPayInFullAnswers.AnswerNotRequired,
       upfrontPaymentAnswers = dependencies.upfrontPaymentAnswersDeclared,
       extremeDatesResponse = dependencies.extremeDatesWithUpfrontPayment,
@@ -369,6 +397,7 @@ trait TdJourneySaDetachedUrl {
         correlationId = dependencies.correlationId,
         taxId = saUtr,
         eligibilityCheckResult = eligibleEligibilityCheckResultSa,
+        assessmentCategory = AssessmentCategory.Standard,
         whyCannotPayInFullAnswers = WhyCannotPayInFullAnswers.AnswerNotRequired,
         upfrontPaymentAnswers = dependencies.upfrontPaymentAnswersDeclared,
         extremeDatesResponse = dependencies.extremeDatesWithUpfrontPayment,
@@ -394,6 +423,7 @@ trait TdJourneySaDetachedUrl {
       correlationId = dependencies.correlationId,
       taxId = saUtr,
       eligibilityCheckResult = eligibleEligibilityCheckResultSa,
+      assessmentCategory = AssessmentCategory.Standard,
       whyCannotPayInFullAnswers = WhyCannotPayInFullAnswers.AnswerNotRequired,
       upfrontPaymentAnswers = dependencies.upfrontPaymentAnswersDeclared,
       extremeDatesResponse = dependencies.extremeDatesWithUpfrontPayment,
@@ -416,6 +446,7 @@ trait TdJourneySaDetachedUrl {
         correlationId = dependencies.correlationId,
         taxId = saUtr,
         eligibilityCheckResult = eligibleEligibilityCheckResultSa,
+        assessmentCategory = AssessmentCategory.Standard,
         whyCannotPayInFullAnswers = WhyCannotPayInFullAnswers.AnswerNotRequired,
         upfrontPaymentAnswers = dependencies.upfrontPaymentAnswersDeclared,
         extremeDatesResponse = dependencies.extremeDatesWithUpfrontPayment,
@@ -441,6 +472,7 @@ trait TdJourneySaDetachedUrl {
         correlationId = dependencies.correlationId,
         taxId = saUtr,
         eligibilityCheckResult = eligibleEligibilityCheckResultSa,
+        assessmentCategory = AssessmentCategory.Standard,
         whyCannotPayInFullAnswers = WhyCannotPayInFullAnswers.AnswerNotRequired,
         upfrontPaymentAnswers = dependencies.upfrontPaymentAnswersDeclared,
         extremeDatesResponse = dependencies.extremeDatesWithUpfrontPayment,
@@ -468,6 +500,7 @@ trait TdJourneySaDetachedUrl {
         correlationId = dependencies.correlationId,
         taxId = saUtr,
         eligibilityCheckResult = eligibleEligibilityCheckResultSa,
+        assessmentCategory = AssessmentCategory.Standard,
         whyCannotPayInFullAnswers = WhyCannotPayInFullAnswers.AnswerNotRequired,
         upfrontPaymentAnswers = dependencies.upfrontPaymentAnswersDeclared,
         extremeDatesResponse = dependencies.extremeDatesWithUpfrontPayment,
@@ -497,6 +530,7 @@ trait TdJourneySaDetachedUrl {
         correlationId = dependencies.correlationId,
         taxId = saUtr,
         eligibilityCheckResult = eligibleEligibilityCheckResultSa,
+        assessmentCategory = AssessmentCategory.Standard,
         whyCannotPayInFullAnswers = WhyCannotPayInFullAnswers.AnswerNotRequired,
         upfrontPaymentAnswers = dependencies.upfrontPaymentAnswersDeclared,
         extremeDatesResponse = dependencies.extremeDatesWithUpfrontPayment,
@@ -523,6 +557,7 @@ trait TdJourneySaDetachedUrl {
       correlationId = dependencies.correlationId,
       taxId = saUtr,
       eligibilityCheckResult = eligibleEligibilityCheckResultSa,
+      assessmentCategory = AssessmentCategory.Standard,
       whyCannotPayInFullAnswers = WhyCannotPayInFullAnswers.AnswerNotRequired,
       upfrontPaymentAnswers = dependencies.upfrontPaymentAnswersDeclared,
       extremeDatesResponse = dependencies.extremeDatesWithUpfrontPayment,
@@ -549,6 +584,7 @@ trait TdJourneySaDetachedUrl {
         correlationId = dependencies.correlationId,
         taxId = saUtr,
         eligibilityCheckResult = eligibleEligibilityCheckResultSa,
+        assessmentCategory = AssessmentCategory.Standard,
         whyCannotPayInFullAnswers = WhyCannotPayInFullAnswers.AnswerNotRequired,
         upfrontPaymentAnswers = dependencies.upfrontPaymentAnswersDeclared,
         extremeDatesResponse = dependencies.extremeDatesWithUpfrontPayment,
@@ -580,6 +616,7 @@ trait TdJourneySaDetachedUrl {
       correlationId = dependencies.correlationId,
       taxId = saUtr,
       eligibilityCheckResult = eligibleEligibilityCheckResultSa,
+      assessmentCategory = AssessmentCategory.Standard,
       whyCannotPayInFullAnswers = WhyCannotPayInFullAnswers.AnswerNotRequired,
       upfrontPaymentAnswers = dependencies.upfrontPaymentAnswersDeclared,
       extremeDatesResponse = dependencies.extremeDatesWithUpfrontPayment,
